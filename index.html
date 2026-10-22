@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הפתעה ליום ההולדת! 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Rubik:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rubik', 'Heebo', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff6b6b);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #2d3436;
+      text-align: center;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      padding: 30px 20px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      border: 4px solid #f1c40f;
+      position: relative;
+    }
+    #gift-box { cursor: pointer; padding: 40px 20px; transition: transform 0.3s ease; }
+    #gift-box:hover { transform: scale(1.05); }
+    .gift-icon { font-size: 90px; animation: bounce 1.5s infinite; display: inline-block; }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    #surprise-content { display: none; animation: fadeIn 1s ease-in-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .main-img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 4px solid #e74c3c;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
+    }
+    h1 { font-size: 26px; color: #d35400; margin-bottom: 12px; font-weight: 900; }
+    .invitation-text {
+      font-size: 18px;
+      line-height: 1.6;
+      background: #fff3e0;
+      padding: 16px;
+      border-radius: 12px;
+      border-right: 5px solid #e67e22;
+      margin-bottom: 20px;
+      font-weight: 700;
+      color: #d35400;
+    }
+    .timer-title { font-size: 16px; color: #7f8c8d; margin-bottom: 8px; }
+    .timer-box {
+      display: flex;
+      justify-content: space-around;
+      background: #f1f2f6;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+    .timer-item { display: flex; flex-direction: column; }
+    .timer-num { font-size: 20px; font-weight: 900; color: #e74c3c; }
+    .timer-label { font-size: 12px; color: #57606f; }
+    .greeting-box {
+      text-align: right;
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 16px;
+      border: 2px dashed #e74c3c;
+    }
+    .greeting-header { font-size: 20px; font-weight: 900; color: #c0392b; margin-bottom: 12px; text-align: center; }
+    .greeting-intro { font-size: 15px; line-height: 1.7; margin-bottom: 16px; color: #2c3e50; }
+    .greeting-list { list-style: none; }
+    .greeting-list li { font-size: 14px; line-height: 1.6; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #eee; color: #34495e; }
+    .greeting-outro { margin-top: 16px; font-weight: 700; text-align: center; color: #e74c3c; font-size: 16px; }
+    .audio-control {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #ffffff;
+      border: 2px solid #e74c3c;
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <button class="audio-control" onclick="toggleAudio()" id="audio-btn">🔊 מוזיקה</button>
+
+    <div id="gift-box" onclick="openSurprise()">
+      <div class="gift-icon">🎁</div>
+      <h2 style="color: #e74c3c; margin-top: 15px;">לחצי כאן לפתיחת ההפתעה! ❤️</h2>
+    </div>
+
+    <div id="surprise-content">
+      <h1>מזל טוב צ'וצ'ה שלי! 🎉</h1>
+
+      <!-- התמונה המקורית במסעדה -->
+      <img class="main-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="חגיגה מקסיקנית">
+
+      <!-- ההזמנה (ללא כיתוב MX) -->
+      <div class="invitation-text">
+        🌮 הנך מוזמנת לטאקריה בתאריך ה-28.11.2026 לארוחה מקסיקנית חוצת גבולות לרגל חגיגת יום הולדת!
+      </div>
+
+      <div class="timer-title">⏳ אנחנו ביחד כבר:</div>
+      <div class="timer-box">
+        <div class="timer-item"><span class="timer-num" id="years">0</span><span class="timer-label">שנים</span></div>
+        <div class="timer-item"><span class="timer-num" id="months">0</span><span class="timer-label">חודשים</span></div>
+        <div class="timer-item"><span class="timer-num" id="days">0</span><span class="timer-label">ימים</span></div>
+        <div class="timer-item"><span class="timer-num" id="hours">0</span><span class="timer-label">שעות</span></div>
+        <div class="timer-item"><span class="timer-num" id="minutes">0</span><span class="timer-label">דקות</span></div>
+      </div>
+
+      <div class="greeting-box">
+        <div class="greeting-header">💌 הברכה שלך</div>
+        <div class="greeting-intro">
+          היי צ'וצ'ה. ❤️<br>
+          22 שנים חלפו להם כהרף עין ✨<br>
+          22 שנים של קיום הפלא האנושי על כדור הארץ 🌍<br>
+          22 שנים שבהן גדלת להיות האדם המושלם שאת 👑<br>
+          22 שנים של ירידות ועליות שבסופן יצרו את המוצר היקר בעולם 💎<br>
+          22 שנים של זהו נגמר לי היצירתיות 😂<br><br>
+          אני אמור כאילו לאחל לך דברים וכזה כי זה יום הולדת אבל זה משעמם ולא מעניין. אז אני פשוט אאחל לך את כל הטוב שבעולםםם, אני מאגד לאיחול הזה הכלללל. 🎁<br>
+          מה שיותר מעניין אותך זה נראה לי החלק הבא... 😈<br><br>
+          <strong>אז הנה 22 משפטי אהבה שאת לא מקבלת ביום-יום, אבל עכשיו זה הרגע להגיד אותם:</strong>
+        </div>
+
+        <ul class="greeting-list">
+          <li>1. אני אוהב אותך הכי בעולםםם ❤️</li>
+          <li>2. את מושלמתתת ברמות שלא הוגנות לשאר ארבע מיליארד הבנות 👑</li>
+          <li>3. את כוסית בטירוףףף 🔥</li>
+          <li>4. אני מאושר שיש לי אותך 😊</li>
+          <li>5. את הטוויני הכי טובה שיש בעולם 👯‍♀️</li>
+          <li>6. בהמשך לנקודה 5: אני מרגיש שאת החצי השני שלי, פאזל של שני חלקים שמתחברים 🧩</li>
+          <li>7. אני לא רוצה לעשות צ'יטים ולכתוב תודה על כל דבר. אז אגיד תודה על הכל, בעיקר על האהבה האינסופית 💖</li>
+          <li>8. את מלמדת אותי מה הן רגשות ומנסה להפוך אותי לאדם הכי טוב שיש 🌟</li>
+          <li>9. את מרימה לי ברמות וגורמת לי להרגיש שווה 💪</li>
+          <li>10. אפשר ללמוד אותך בבית ספר לאיך להיות אישה 🎓</li>
+          <li>11. בנות שעושות לוקמקסינג מנסות בעצם להיות כמוך ✨</li>
+          <li>12. את דובון אכפת לי אחד ענק. בלי הקטע של הדובון 🧸</li>
+          <li>13. את הבת הכי טובה שאמא יכולה לבקש 👩‍👧</li>
+          <li>14. את הבת זוג הכי טובה שאני יכלתי לבקש 💑</li>
+          <li>15. את גורמת לי לכתוב את הברכה הזאת - שזה הישג גדול רצח 📝</li>
+          <li>16. את חכמה בטירוף, ומקצועית, ומצטיינת, ודיילת סבבה, ומתאמנת שווה 🏋️‍♀️</li>
+          <li>17. את תמיד צודקת 💯</li>
+          <li>18. אני גאה בך רצח על כל מה שאת עושה 🏆</li>
+          <li>19. כולך טוב אחד טהור. בחיים לא חוויתי ממך כוונות שליליות (חוץ מבכביש 🚗)</li>
+          <li>20. אני אוהב את הצחוקים שלנו ביחד 😂</li>
+          <li>21. את הבן אדם שאני מרגיש איתו הכי נוח בעולםםם 🏡</li>
+          <li>22. ואחרון - אני פשוט אאחל לי אותך לכל החיים 💍</li>
+        </ul>
+
+        <div class="greeting-outro">
+          אשכרה כתבתי 22! מי ידע שיש בי את זה. 😎<br>
+          קיצר מזל טוב, אני אוהב אותך מלא מיליונים! 💕🎉
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- שיר ה-Happy Birthday ברוק -->
+  <audio id="bg-audio" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7342b.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const audio = document.getElementById('bg-audio');
+
+    function openSurprise() {
+      document.getElementById('gift-box').style.display = 'none';
+      document.getElementById('surprise-content').style.display = 'block';
+      audio.play().catch(() => {});
+      startTimer();
+    }
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        document.getElementById('audio-btn').innerText = '🔊 מוזיקה';
+      } else {
+        audio.pause();
+        document.getElementById('audio-btn').innerText = '🔇 מושתק';
+      }
+    }
+
+    function startTimer() {
+      const startDate = new Date('2024-10-28T00:00:00');
+      
+      function update() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+        const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.4375));
+        const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.4375)) / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById('years').innerText = years;
+        document.getElementById('months').innerText = months;
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText = hours;
+        document.getElementById('minutes').innerText = minutes;
+      }
+
+      update();
+      setInterval(update, 1000);
+    }
+  </script>
+</body>
+</html>
